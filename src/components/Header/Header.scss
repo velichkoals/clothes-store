@@ -1,0 +1,86 @@
+@import "../../variables";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 101px;
+  padding: 20px 0;
+
+  &__section {
+    font-size: $small-size;
+    display: flex;
+
+    &__item {
+      margin: 0 16px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+
+    &__converter {
+      margin: 0 25px;
+      position: relative;
+      &.active::before {
+        top: 10px;
+        transform: rotate(-225deg);
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        right: 0;
+        z-index: 10000;
+        width: 4px;
+        height: 4px;
+        border: 2px solid #5b5b5b;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        border-radius: 2px;
+        transform: rotate(-45deg);
+        transition: .4s;
+        pointer-events: none;
+      }
+      &.active .converter__options {
+        display: block;
+      }
+    }
+
+    .converter {
+      &__textBox {
+        border: none;
+        outline: none;
+        width: 25px;
+        font-family: $main-font;
+        font-size: $main-size;
+        font-weight: 500;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &__options {
+        border: 1px solid rgba(204, 204, 204, 0.3);
+        display: none;
+        position: absolute;
+        width: 100px;
+        top: 23px;
+      }
+
+      &__item {
+        padding: 15px 20px;
+        &:hover {
+          background-color: rgba(204, 204, 204, 0.3);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.arrow-icon {
+  margin: 0 2px;
+}
