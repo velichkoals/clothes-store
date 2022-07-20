@@ -29,9 +29,9 @@ class Header extends Component {
 		return (
 			<header className='header'>
 				<div className='header__section'>
-					<div className='header__section__item'>WOMEN</div>
-					<div className='header__section__item'>MEN</div>
-					<div className='header__section__item'>KIDS</div>
+					<div className='header__section__item'>ALL</div>
+					<div className='header__section__item'>CLOTHES</div>
+					<div className='header__section__item'>TECH</div>
 				</div>
 				<div className='header__logo'>
 					<VSF width='31px' height='30px' />

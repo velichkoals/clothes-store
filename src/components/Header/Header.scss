@@ -13,6 +13,11 @@
 
     &__item {
       margin: 0 16px;
+      &:hover {
+        color: $green-color;
+        cursor: pointer;
+        transition: color .2s ease-in-out;
+      }
     }
   }
 
