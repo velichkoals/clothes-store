@@ -12,7 +12,24 @@
     display: flex;
 
     &__item {
+      position: relative;
       margin: 0 16px;
+      text-decoration: none;
+      color: #1D1F22;
+
+      &.selected {
+        color: #5ECE7B;
+        &:after {
+          content: "";
+          background-color: #5ECE7B;
+          position: absolute;
+          height: 2px;
+          left: 0;
+          top: 40px;
+          width: 100%;
+        }
+      }
+
       &:hover {
         color: $green-color;
         cursor: pointer;
@@ -27,6 +44,7 @@
     &__converter {
       margin: 0 25px;
       position: relative;
+
       &.active::before {
         top: 10px;
         transform: rotate(-225deg);

@@ -10,6 +10,7 @@ class ProductCard extends Component {
 
 		this.state = {
 			data: [],
+			isLoading: true,
 		};
 	}
 
@@ -17,6 +18,7 @@ class ProductCard extends Component {
 		getProductByIdQuery(this.props.id).then((response) => {
 			this.setState({
 				data: response.data.product,
+				isLoading: response.loading,
 			});
 		});
 	}
@@ -26,20 +28,25 @@ class ProductCard extends Component {
 		if (!this.state.data.inStock) {
 			inStock = false;
 		}
-		return (
-			<div className={`product-card ${!inStock ? 'out-of-stock' : null}`}>
+
+		return this.state.isLoading ? (
+			<div className='product-card loading'>
+				<span className='card-loader'></span>
+			</div>
+		) : (
+			<div className={`product-card ${!inStock ? 'out-of-stock' : ''}`}>
 				<img
 					src={`${this.state.data.gallery?.[0]}`}
 					alt='card-img'
-					className={`product-card__image ${!inStock ? 'out-of-stock' : null}`}
+					className={`product-card__image ${!inStock ? 'out-of-stock' : ''}`}
 				/>
 				<div
-					className={`product-card__title ${!inStock ? 'out-of-stock' : null}`}
+					className={`product-card__title ${!inStock ? 'out-of-stock' : ''}`}
 				>
 					{this.state.data.name}
 				</div>
 				<div
-					className={`product-card__price ${!inStock ? 'out-of-stock' : null}`}
+					className={`product-card__price ${!inStock ? 'out-of-stock' : ''}`}
 				>
 					{`${this.state.data.prices?.[0].currency.symbol} ${this.state.data.prices?.[0].amount}`}
 				</div>

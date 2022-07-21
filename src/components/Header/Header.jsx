@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ReactComponent as VSF } from '../../assets/VSF.svg';
 import { ReactComponent as Cart } from '../../assets/empty-cart.svg';
+import { Link } from 'react-router-dom';
 
 import './Header.scss';
 
@@ -29,9 +30,30 @@ class Header extends Component {
 		return (
 			<header className='header'>
 				<div className='header__section'>
-					<div className='header__section__item'>ALL</div>
-					<div className='header__section__item'>CLOTHES</div>
-					<div className='header__section__item'>TECH</div>
+					<Link
+						to='/all'
+						className={`header__section__item ${
+							this.props.category === 'all' ? 'selected' : ''
+						}`}
+					>
+						ALL
+					</Link>
+					<Link
+						to='/clothes'
+						className={`header__section__item ${
+							this.props.category === 'clothes' ? 'selected' : ''
+						}`}
+					>
+						CLOTHES
+					</Link>
+					<Link
+						to='/tech'
+						className={`header__section__item ${
+							this.props.category === 'tech' ? 'selected' : ''
+						}`}
+					>
+						TECH
+					</Link>
 				</div>
 				<div className='header__logo'>
 					<VSF width='31px' height='30px' />

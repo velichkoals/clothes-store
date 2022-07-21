@@ -6,8 +6,8 @@ class App extends Component {
 	render() {
 		return (
 			<>
-				<Header />
-				<ProductList />
+				<Header category={this.props.category} />
+				<ProductList {...this.props} />
 			</>
 		);
 	}

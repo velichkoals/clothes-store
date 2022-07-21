@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
-import { getAllProductsQuery } from '../../queries/getAllProductsQuery';
-import { client } from '../../index';
+import { getProductsQuery } from '../../queries/getProductsQuery';
 
 import './ProductList.scss';
 
@@ -9,14 +8,24 @@ class ProductList extends Component {
 	constructor() {
 		super();
 		this.state = {
-			category: [],
+			products: [],
 		};
 	}
 
 	componentDidMount() {
-		client.query({ query: getAllProductsQuery }).then((response) => {
+		this.getProducts(this.props.category);
+	}
+
+	componentDidUpdate(prevProps) {
+		if (prevProps.category !== this.props.category) {
+			this.getProducts(this.props.category);
+		}
+	}
+
+	getProducts(category) {
+		getProductsQuery(category).then((response) => {
 			this.setState({
-				category: response.data.category.products,
+				products: response.data.category.products,
 			});
 		});
 	}
@@ -24,9 +33,9 @@ class ProductList extends Component {
 	render() {
 		return (
 			<div className='product-list'>
-				<div className='product-list__title'>All products</div>
+				<div className='product-list__title'>{this.props.title}</div>
 				<div className='product-card__wrapper'>
-					{this.state.category.map((product) => (
+					{this.state.products.map((product) => (
 						<ProductCard key={product.id} id={product.id} />
 					))}
 				</div>
