@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ReactComponent as AddToCart } from '../../assets/add-to-cart.svg';
+import { connect } from 'react-redux';
 import { getProductByIdQuery } from '../../queries/getProductByIdQuery';
 
 import './ProductCard.scss';
@@ -7,10 +8,11 @@ import './ProductCard.scss';
 class ProductCard extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			data: [],
 			isLoading: true,
+			symbol: '',
+			amount: '',
 		};
 	}
 
@@ -19,7 +21,27 @@ class ProductCard extends Component {
 			this.setState({
 				data: response.data.product,
 				isLoading: response.loading,
+				symbol: this.props.currency,
+				amount: response.data.product.prices[0].amount,
 			});
+		});
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (this.state.symbol !== this.props.currency) {
+			this.getPrices();
+		}
+	}
+
+	getPrices() {
+		this.state.data.prices.filter((item) => {
+			if (item.currency.symbol === this.props.currency) {
+				this.setState({
+					symbol: item.currency.symbol,
+					amount: item.amount,
+				});
+			}
+			return this.state.data.prices;
 		});
 	}
 
@@ -48,8 +70,9 @@ class ProductCard extends Component {
 				<div
 					className={`product-card__price ${!inStock ? 'out-of-stock' : ''}`}
 				>
-					{`${this.state.data.prices?.[0].currency.symbol} ${this.state.data.prices?.[0].amount}`}
+					{`${this.state.symbol} ${this.state.amount}`}
 				</div>
+
 				{inStock ? (
 					<AddToCart className='add-to-cart' width='52px' height='52px' />
 				) : (
@@ -60,4 +83,8 @@ class ProductCard extends Component {
 	}
 }
 
-export default ProductCard;
+const mapStateToProps = (state) => ({
+	currency: state.currency,
+});
+
+export default connect(mapStateToProps)(ProductCard);

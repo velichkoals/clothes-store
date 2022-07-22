@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { ReactComponent as VSF } from '../../assets/VSF.svg';
 import { ReactComponent as Cart } from '../../assets/empty-cart.svg';
 import { Link } from 'react-router-dom';
+import { store } from '../../store';
+import { getCurrencies } from '../../queries/getCurrencies';
+import { getCurrencyAction } from '../../store/currency/actionCreators';
 
 import './Header.scss';
 
@@ -9,15 +12,30 @@ class Header extends Component {
 	constructor() {
 		super();
 		this.state = {
-			currencyVal: '$',
+			currency: '$',
+			currencies: [],
 			isActive: false,
 		};
 		this.toggleActive = this.toggleActive.bind(this);
 	}
 
+	componentDidMount() {
+		getCurrencies().then((response) => {
+			this.setState({
+				currencies: response.data.currencies,
+			});
+		});
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.currency !== prevState.currency) {
+			store.dispatch(getCurrencyAction(this.state.currency));
+		}
+	}
+
 	showCurrency(currency) {
 		this.setState({
-			currencyVal: currency,
+			currency: currency,
 		});
 	}
 	toggleActive() {
@@ -68,29 +86,20 @@ class Header extends Component {
 						<input
 							type='text'
 							className={'converter__textBox'}
-							value={this.state.currencyVal}
+							value={this.state.currency}
 							readOnly={true}
 							onMouseEnter={this.toggleActive}
 						/>
 						<div className='converter__options'>
-							<div
-								className='converter__item'
-								onClick={() => this.showCurrency('$')}
-							>
-								$ USD
-							</div>
-							<div
-								className='converter__item'
-								onClick={() => this.showCurrency('€')}
-							>
-								€ EUR
-							</div>
-							<div
-								className='converter__item'
-								onClick={() => this.showCurrency('¥')}
-							>
-								¥ JPY
-							</div>
+							{this.state.currencies.map((elem, index) => (
+								<div
+									key={index}
+									className='converter__item'
+									onClick={() => this.showCurrency(elem.symbol)}
+								>
+									{elem.symbol} {elem.label}
+								</div>
+							))}
 						</div>
 					</div>
 					<div className='header__actions__cart'>
