@@ -25,11 +25,15 @@ class Header extends Component {
 				currencies: response.data.currencies,
 			});
 		});
+		localStorage.setItem('category', this.props.category);
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.currency !== prevState.currency) {
 			store.dispatch(getCurrencyAction(this.state.currency));
+		}
+		if (prevState.category !== this.props.category) {
+			localStorage.setItem('category', this.props.category);
 		}
 	}
 

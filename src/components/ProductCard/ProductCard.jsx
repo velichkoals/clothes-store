@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 import { ReactComponent as AddToCart } from '../../assets/add-to-cart.svg';
-import { connect } from 'react-redux';
 import { getProductByIdQuery } from '../../queries/getProductByIdQuery';
+import { connect } from 'react-redux';
 
 import './ProductCard.scss';
 
@@ -18,12 +20,15 @@ class ProductCard extends Component {
 
 	componentDidMount() {
 		getProductByIdQuery(this.props.id).then((response) => {
-			this.setState({
-				data: response.data.product,
-				isLoading: response.loading,
-				symbol: this.props.currency,
-				amount: response.data.product.prices[0].amount,
-			});
+			this.setState(
+				{
+					data: response.data.product,
+					isLoading: response.loading,
+				},
+				() => {
+					this.getPrices();
+				}
+			);
 		});
 	}
 
@@ -52,11 +57,13 @@ class ProductCard extends Component {
 		}
 
 		return this.state.isLoading ? (
-			<div className='product-card loading'>
-				<span className='card-loader'></span>
-			</div>
+			<Loader />
 		) : (
-			<div className={`product-card ${!inStock ? 'out-of-stock' : ''}`}>
+			<Link
+				to={`/${this.props.id}`}
+				disabled={true}
+				className={`product-card ${!inStock ? 'out-of-stock' : ''}`}
+			>
 				<img
 					src={`${this.state.data.gallery?.[0]}`}
 					alt='card-img'
@@ -78,12 +85,12 @@ class ProductCard extends Component {
 				) : (
 					<div className='product-card__out-of-stock'>Out of stock</div>
 				)}
-			</div>
+			</Link>
 		);
 	}
 }
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
 	currency: state.currency,
 });
 

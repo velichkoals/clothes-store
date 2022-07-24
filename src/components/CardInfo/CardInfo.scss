@@ -1,0 +1,120 @@
+@import "../../variables";
+
+.card-info {
+  margin: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.loading {
+    width: 100%;
+    height: 300px;
+  }
+
+  &__column {
+    margin: 0 60px;
+  }
+
+  &__gallery {
+    display: flex;
+
+    &_wrapper {
+      display: flex;
+      max-width: 300px;
+      flex-wrap: wrap;
+    }
+  }
+  &__gallery-item {
+    max-width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__main-img {
+    max-width: 400px;
+    height: 400px;
+    object-fit: cover;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: $big-size;
+  }
+  &__brand {
+    margin-bottom: 30px;
+    font-size: $big-size;
+  }
+
+  &__option {
+    &__title {
+      font-family: $second-font;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    &__price {
+      margin: 5px 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    &__wrapper {
+      display: flex;
+    }
+
+    &__item {
+      margin: 0 10px 10px 0;
+      border: 1px solid #1D1F22;
+      padding: 10px 13px;
+      font-family: $third-font;
+      min-width: 30px;
+      text-align: center;
+
+      &:hover {
+        background-color: $main-color;
+        color: #ffffff;
+        cursor: pointer;
+      }
+    }
+
+    &__item-swatch {
+      margin: 0 10px 10px 0;
+      border: 2px solid rgba(210, 210, 210, 1);
+      opacity: .8;
+      width: 30px;
+      height: 30px;
+      
+      &:hover {
+        cursor: pointer;
+        border: 2px solid $green-color !important;
+      }
+    }
+  }
+
+  &__btn {
+    margin: 20px 0;
+    background-color: $green-color;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 16px 70px;
+    font-family: $main-font;
+    font-weight: 600;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(94, 206, 123, 0.9);
+    }
+  }
+
+  &__description {
+    font-size: 16px;
+    max-width: 300px;
+  }
+}
+
+.info__text {
+  align-self: flex-start;
+}

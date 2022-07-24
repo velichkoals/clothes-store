@@ -9,6 +9,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-decoration: none;
+  color: $main-color;
 
   &__image {
     align-self: center;
@@ -55,6 +57,7 @@
   &.out-of-stock {
     box-shadow: none;
     cursor: auto;
+    pointer-events: none;
   }
 }
 
