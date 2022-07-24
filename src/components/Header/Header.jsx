@@ -3,7 +3,9 @@ import { ReactComponent as VSF } from '../../assets/VSF.svg';
 import { ReactComponent as Cart } from '../../assets/empty-cart.svg';
 import { Link } from 'react-router-dom';
 import { store } from '../../store';
+import { connect } from 'react-redux';
 import { getCurrencies } from '../../queries/getCurrencies';
+import { mapStateToProps } from '../ProductCard/ProductCard';
 import { getCurrencyAction } from '../../store/currency/actionCreators';
 
 import './Header.scss';
@@ -12,7 +14,7 @@ class Header extends Component {
 	constructor() {
 		super();
 		this.state = {
-			currency: '$',
+			currency: '',
 			currencies: [],
 			isActive: false,
 		};
@@ -23,6 +25,7 @@ class Header extends Component {
 		getCurrencies().then((response) => {
 			this.setState({
 				currencies: response.data.currencies,
+				currency: this.props.currency,
 			});
 		});
 		localStorage.setItem('category', this.props.category);
@@ -115,4 +118,4 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+export default connect(mapStateToProps)(Header);
