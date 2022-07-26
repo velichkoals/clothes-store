@@ -2,6 +2,7 @@ import React from 'react';
 import App from './App';
 import ReactDOM from 'react-dom/client';
 import CardInfo from './components/CardInfo/CardInfo';
+import Cart from './components/Cart/Cart';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -37,6 +38,7 @@ root.render(
 							path='/tech'
 							element={<App category='tech' title='Tech' />}
 						/>
+						<Route path='/cart' element={<Cart />} />
 						<Route path='/:cardId' element={<CardInfo />} />
 					</Routes>
 				</BrowserRouter>

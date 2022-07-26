@@ -1,0 +1,41 @@
+@import '../../../variables';
+
+.mini-cart-wrapper {
+  bottom: 0;
+  background: rgba(57, 55, 72, 0.22);
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+}
+
+.mini-cart {
+  align-items: center;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position:fixed;
+  padding: 20px 10px;
+  min-width: 200px;
+  height: auto;
+  top: 70px;
+  right: 50px;
+}
+
+.open-cart__btn {
+  border: 1px solid $main-color;
+  background-color: #fff;
+  color: $main-color;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: $main-font;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

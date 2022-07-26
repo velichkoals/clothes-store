@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ReactComponent as VSF } from '../../assets/VSF.svg';
 import { ReactComponent as Cart } from '../../assets/empty-cart.svg';
+import MiniCart from './MiniCart/MiniCart';
 import { Link } from 'react-router-dom';
 import { store } from '../../store';
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ class Header extends Component {
 			currency: '',
 			currencies: [],
 			isActive: false,
+			isOpen: false,
 		};
 		this.toggleActive = this.toggleActive.bind(this);
 	}
@@ -31,7 +33,7 @@ class Header extends Component {
 		localStorage.setItem('category', this.props.category);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.state.currency !== prevState.currency) {
 			store.dispatch(getCurrencyAction(this.state.currency));
 		}
@@ -45,6 +47,7 @@ class Header extends Component {
 			currency: currency,
 		});
 	}
+
 	toggleActive() {
 		this.setState({
 			isActive: !this.state.isActive,
@@ -109,10 +112,21 @@ class Header extends Component {
 							))}
 						</div>
 					</div>
-					<div className='header__actions__cart'>
+					<div
+						className='header__actions__cart'
+						onClick={
+							!this.state.isOpen
+								? () => this.setState({ isOpen: true })
+								: () => this.setState({ isOpen: false })
+						}
+					>
 						<Cart width='20px' height='20px' />
 					</div>
 				</div>
+				<MiniCart
+					open={this.state.isOpen}
+					handleClose={() => this.setState({ isOpen: false })}
+				/>
 			</header>
 		);
 	}
