@@ -65,30 +65,64 @@
     }
 
     &__item {
+      display: flex;
+      overflow: hidden;
       margin: 0 10px 10px 0;
-      border: 1px solid #1D1F22;
-      padding: 10px 13px;
-      font-family: $third-font;
-      min-width: 30px;
-      text-align: center;
 
-      &:hover {
+      & input {
+        position: absolute !important;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+        border: 0;
+        overflow: hidden;
+      }
+      & label {
+        border: 1px solid #1D1F22;
+        padding: 10px 13px;
+        font-family: $third-font;
+        min-width: 30px;
+        text-align: center;
+
+        &:hover {;
+          cursor: pointer;
+        }
+      }
+      & input:checked + label {
         background-color: $main-color;
         color: #ffffff;
-        cursor: pointer;
+        box-shadow: none;
       }
     }
 
     &__item-swatch {
+      display: flex;
+      overflow: hidden;
       margin: 0 10px 10px 0;
-      border: 2px solid rgba(210, 210, 210, 1);
-      opacity: .8;
-      width: 30px;
-      height: 30px;
-      
-      &:hover {
-        cursor: pointer;
+
+      & input {
+        position: absolute !important;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+
+      & label {
+        border: 2px solid rgba(210, 210, 210, 1);
+        font-family: $third-font;
+        text-align: center;
+        opacity: .8;
+        width: 30px;
+        height: 30px;
+
+        &:hover {;
+          cursor: pointer;
+        }
+      }
+      & input:checked + label {
         border: 2px solid $green-color !important;
+        box-shadow: none;
       }
     }
   }

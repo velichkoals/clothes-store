@@ -55,10 +55,19 @@ class CardInfo extends Component {
 			return this.state.data.prices;
 		});
 	}
+
 	changeImage(image) {
 		this.setState({
 			photo: image,
 		});
+	}
+
+	handleClick(value) {
+		console.log(value);
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
 	}
 
 	render() {
@@ -89,7 +98,10 @@ class CardInfo extends Component {
 								/>
 							</div>
 						</div>
-						<div className='card-info__column info__text'>
+						<form
+							onSubmit={(e) => this.handleSubmit(e)}
+							className='card-info__column info__text'
+						>
 							<div className='card-info__title'>{this.state.data.name}</div>
 							<div className='card-info__brand'>{this.state.data.brand}</div>
 							{this.state.data.attributes?.map((attribute) => (
@@ -101,22 +113,38 @@ class CardInfo extends Component {
 										{attribute.type === 'text'
 											? attribute.items?.map((item) => (
 													<div
-														className='card-info__option__item'
 														key={item.id}
+														className='card-info__option__item'
 													>
-														{item.value}
+														<input
+															onClick={() => this.handleClick(item.value)}
+															type='radio'
+															id={`${item.id} ${attribute.id}`}
+															name={attribute.name}
+														/>
+														<label htmlFor={`${item.id} ${attribute.id}`}>
+															{item.value}
+														</label>
 													</div>
 											  ))
 											: null}
 										{attribute.type === 'swatch'
 											? attribute.items?.map((item) => (
 													<div
-														className='card-info__option__item-swatch'
 														key={item.id}
+														className='card-info__option__item-swatch'
 														style={{
 															backgroundColor: `${item.value}`,
 														}}
-													></div>
+													>
+														<input
+															onClick={() => this.handleClick(item.value)}
+															type='radio'
+															id={item.id}
+															name={attribute.name}
+														/>
+														<label htmlFor={item.id}></label>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -128,14 +156,16 @@ class CardInfo extends Component {
 									{this.state.symbol} {this.state.amount}
 								</div>
 							</div>
-							<button className='card-info__btn'>Add to cart</button>
+							<button type='submit' className='card-info__btn'>
+								Add to cart
+							</button>
 							<div
 								className='card-info__description'
 								dangerouslySetInnerHTML={{
 									__html: this.state.data.description,
 								}}
 							/>
-						</div>
+						</form>
 					</div>
 				)}
 			</>
