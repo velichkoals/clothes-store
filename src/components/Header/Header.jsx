@@ -120,6 +120,9 @@ class Header extends Component {
 								: () => this.setState({ isOpen: false })
 						}
 					>
+						{this.props.cart.quantity ? (
+							<div className='cart-quantity'>{this.props.cart.quantity}</div>
+						) : null}
 						<Cart width='20px' height='20px' />
 					</div>
 				</div>

@@ -92,6 +92,7 @@ class ProductCard extends Component {
 
 export const mapStateToProps = (state) => ({
 	currency: state.currency,
+	cart: state.cart,
 });
 
 export default connect(mapStateToProps)(ProductCard);

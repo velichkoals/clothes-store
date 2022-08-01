@@ -1,0 +1,24 @@
+@import "../../variables";
+
+.selected-prop {
+  background-color: #1D1F22;
+  color: #ffffff;
+  box-shadow: none;
+  opacity: .9;
+  pointer-events: none;
+  cursor: auto;
+
+  &__swatch {
+    border: 2px solid $green-color !important;
+    box-shadow: none;
+    pointer-events: none;
+    cursor: auto;
+  }
+}
+
+.item__prop {
+  opacity: .9;
+  pointer-events: none;
+  cursor: auto;
+}
+

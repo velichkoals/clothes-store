@@ -1,0 +1,39 @@
+.cart__item {
+
+  &__line {
+    border: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+  }
+  &__info__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__slider {
+    position: relative;
+  }
+  &__slide {
+    max-width: 250px;
+    transition: all 0.5s;
+    position: absolute;
+  }
+  &__img {
+    max-width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
+  &__arrow {
+    position: absolute;
+    bottom: 20px;
+
+    &_left {
+      right: 45px;
+    }
+    &_right {
+      right: 15px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

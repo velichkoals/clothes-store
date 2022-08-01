@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import Header from '../Header/Header';
+import CartItem from './CartItem/CartItem';
 
 import './Cart.scss';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../ProductCard/ProductCard';
 
 class Cart extends Component {
 	render() {
 		return (
-			<div>
+			<>
 				<Header category={localStorage.getItem('category')} />
 				<div className='cart'>
 					<div className='cart__title'>Cart</div>
+					{this.props.cart.cart.map((item) => (
+						<CartItem key={item.data.id} id={item.data.id} item={item} />
+					))}
 				</div>
-			</div>
+			</>
 		);
 	}
 }
 
-export default Cart;
+export default connect(mapStateToProps)(Cart);

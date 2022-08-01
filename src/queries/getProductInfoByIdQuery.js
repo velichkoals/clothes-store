@@ -6,6 +6,7 @@ export function getProductInfoByIdQuery(id) {
 		query: gql`
 query {
 product(id: "${id}") {
+ 	id
 	name 
 	gallery
 	description

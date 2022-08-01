@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../Header/Header';
+import CardData from '../CardData/CardData';
+import Loader from '../Loader/Loader';
 import { connect } from 'react-redux';
+import { store } from '../../store';
 import { mapStateToProps } from '../ProductCard/ProductCard';
 import { getProductInfoByIdQuery } from '../../queries/getProductInfoByIdQuery';
-import Loader from '../Loader/Loader';
+import { addItemToCartAction } from '../../store/cart/actionCreators';
+import { withRouter } from '../../helpers/withRouter';
 
 import './CardInfo.scss';
 
@@ -17,7 +21,9 @@ class CardInfo extends Component {
 			amount: '',
 			photo: '',
 			isLoading: true,
+			validation: [],
 		};
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -62,12 +68,47 @@ class CardInfo extends Component {
 		});
 	}
 
-	handleClick(value) {
-		console.log(value);
+	handleClick(event, value) {
+		this.state.data.attributes.map((attribute) => {
+			if (attribute.name === event.target.name) {
+				this.setState((prevState) => ({
+					validation: [
+						...prevState.validation,
+						{
+							name: event.target.name,
+							value,
+							isChecked: true,
+						},
+					],
+				}));
+			}
+			return value;
+		});
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
+		const navigate = this.props.navigate;
+
+		if (
+			(Object.keys(this.state.validation).length === 0 &&
+				this.state.data.attributes.length !== 0) ||
+			Object.keys(this.state.validation).length !==
+				this.state.data.attributes.length
+		) {
+			alert('Select product options!');
+		} else {
+			const dataObj = {
+				itemQuantity: 0,
+				data: this.state.data,
+				amount: this.state.amount,
+				symbol: this.state.symbol,
+				selected: this.state.validation,
+			};
+
+			store.dispatch(addItemToCartAction(dataObj));
+			navigate(`/all`);
+		}
 	}
 
 	render() {
@@ -102,60 +143,12 @@ class CardInfo extends Component {
 							onSubmit={(e) => this.handleSubmit(e)}
 							className='card-info__column info__text'
 						>
-							<div className='card-info__title'>{this.state.data.name}</div>
-							<div className='card-info__brand'>{this.state.data.brand}</div>
-							{this.state.data.attributes?.map((attribute) => (
-								<div className='card-info__option' key={attribute.id}>
-									<div className='card-info__option__title'>
-										{attribute.name}:
-									</div>
-									<div className='card-info__option__wrapper'>
-										{attribute.type === 'text'
-											? attribute.items?.map((item) => (
-													<div
-														key={item.id}
-														className='card-info__option__item'
-													>
-														<input
-															onClick={() => this.handleClick(item.value)}
-															type='radio'
-															id={`${item.id} ${attribute.id}`}
-															name={attribute.name}
-														/>
-														<label htmlFor={`${item.id} ${attribute.id}`}>
-															{item.value}
-														</label>
-													</div>
-											  ))
-											: null}
-										{attribute.type === 'swatch'
-											? attribute.items?.map((item) => (
-													<div
-														key={item.id}
-														className='card-info__option__item-swatch'
-														style={{
-															backgroundColor: `${item.value}`,
-														}}
-													>
-														<input
-															onClick={() => this.handleClick(item.value)}
-															type='radio'
-															id={item.id}
-															name={attribute.name}
-														/>
-														<label htmlFor={item.id}></label>
-													</div>
-											  ))
-											: null}
-									</div>
-								</div>
-							))}
-							<div className='card-info__price'>
-								<div className='card-info__option__title'>Price:</div>
-								<div className='card-info__option__price'>
-									{this.state.symbol} {this.state.amount}
-								</div>
-							</div>
+							<CardData
+								data={this.state.data}
+								symbol={this.state.symbol}
+								amount={this.state.amount}
+								handleClick={this.handleClick}
+							/>
 							<button type='submit' className='card-info__btn'>
 								Add to cart
 							</button>
@@ -175,4 +168,4 @@ class CardInfo extends Component {
 
 const Card = (props) => <CardInfo {...props} params={useParams()} />;
 
-export default connect(mapStateToProps)(Card);
+export default withRouter(connect(mapStateToProps)(Card));

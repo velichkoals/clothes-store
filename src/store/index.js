@@ -1,9 +1,10 @@
 import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { currencyReducer } from './currency/reducer';
+import { cartReducer } from './cart/reducer';
 
 const rootReducer = combineReducers({
-	// cart: cartReducer,
+	cart: cartReducer,
 	currency: currencyReducer,
 });
 
