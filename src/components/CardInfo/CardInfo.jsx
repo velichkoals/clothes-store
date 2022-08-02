@@ -172,7 +172,7 @@ class CardInfo extends Component {
 								amount={this.state.amount}
 								handleClick={this.handleClick}
 							/>
-							<button type='submit' className='card-info__btn'>
+							<button type='submit' className='submit-btn'>
 								Add to cart
 							</button>
 							<div

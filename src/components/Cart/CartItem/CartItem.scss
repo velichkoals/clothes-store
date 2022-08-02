@@ -1,11 +1,6 @@
 @import "../../../variables";
 
 .cart__item {
-
-  &__line {
-    border: 1px solid #e5e5e5;
-    margin-bottom: 20px;
-  }
   &__info__wrapper {
     display: flex;
     justify-content: space-between;
@@ -27,13 +22,13 @@
   }
   &__arrow {
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
 
     &_left {
-      right: 95px;
+      right: 120px;
     }
     &_right {
-      right: 65px;
+      right: 90px;
     }
     &:hover {
       cursor: pointer;

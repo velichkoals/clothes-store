@@ -3,6 +3,7 @@ import {
 	INCREASE_EXISTING_PRODUCT,
 	DECREASE_EXISTING_PRODUCT,
 	REMOVE_FROM_CART,
+	CLEAR_CART,
 } from './actionTypes';
 
 export const addItemToCartAction = (payload) => ({
@@ -13,6 +14,10 @@ export const addItemToCartAction = (payload) => ({
 export const removeItemFromCartAction = (payload) => ({
 	type: REMOVE_FROM_CART,
 	payload,
+});
+
+export const clearCartAction = () => ({
+	type: CLEAR_CART,
 });
 
 export const increaseExistingProduct = (payload) => ({

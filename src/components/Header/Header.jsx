@@ -113,7 +113,9 @@ class Header extends Component {
 						</div>
 					</div>
 					<div
-						className='header__actions__cart'
+						className={`header__actions__cart ${
+							this.props.cart.quantity === 0 ? 'disabled' : ''
+						}`}
 						onClick={
 							!this.state.isOpen
 								? () => this.setState({ isOpen: true })

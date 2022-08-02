@@ -3,6 +3,7 @@ import {
 	INCREASE_EXISTING_PRODUCT,
 	DECREASE_EXISTING_PRODUCT,
 	REMOVE_FROM_CART,
+	CLEAR_CART,
 } from './actionTypes';
 
 export const defaultState = {
@@ -28,6 +29,9 @@ export const cartReducer = (state = defaultState, action) => {
 					),
 				],
 			};
+		}
+		case CLEAR_CART: {
+			return { quantity: 0, cart: [] };
 		}
 		case INCREASE_EXISTING_PRODUCT: {
 			return {

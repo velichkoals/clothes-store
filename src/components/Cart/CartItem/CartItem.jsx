@@ -49,7 +49,7 @@ class CartItem extends Component {
 		const item = this.props.item;
 		return (
 			<div className='cart__item' key={this.props.id}>
-				<hr className='cart__item__line' />
+				<hr className='cart__line' />
 				<div className='cart__item__info__wrapper'>
 					<CardData
 						data={item.data}

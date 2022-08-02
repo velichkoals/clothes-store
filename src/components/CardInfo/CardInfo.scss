@@ -55,11 +55,13 @@
       text-transform: uppercase;
       font-weight: 700;
     }
+
     &__price {
       margin: 5px 0;
       font-size: 24px;
       font-weight: 700;
     }
+
     &__wrapper {
       display: flex;
     }
@@ -77,6 +79,7 @@
         border: 0;
         overflow: hidden;
       }
+
       & label {
         border: 1px solid #1D1F22;
         padding: 10px 13px;
@@ -88,6 +91,7 @@
           cursor: pointer;
         }
       }
+
       & input:checked + label {
         background-color: $main-color;
         color: #ffffff;
@@ -120,26 +124,11 @@
           cursor: pointer;
         }
       }
+
       & input:checked + label {
         border: 2px solid $green-color !important;
         box-shadow: none;
       }
-    }
-  }
-
-  &__btn {
-    margin: 20px 0;
-    background-color: $green-color;
-    border: none;
-    color: #fff;
-    text-transform: uppercase;
-    padding: 16px 70px;
-    font-family: $main-font;
-    font-weight: 600;
-
-    &:hover {
-      cursor: pointer;
-      background-color: rgba(94, 206, 123, 0.9);
     }
   }
 
@@ -151,4 +140,20 @@
 
 .info__text {
   align-self: flex-start;
+}
+
+.submit-btn {
+  margin: 20px 0;
+  background-color: $green-color;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 16px 70px;
+  font-family: $main-font;
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(94, 206, 123, 0.9);
+  }
 }
