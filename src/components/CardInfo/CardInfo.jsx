@@ -5,9 +5,13 @@ import CardData from '../CardData/CardData';
 import Loader from '../Loader/Loader';
 import { connect } from 'react-redux';
 import { store } from '../../store';
+import { uuidv4 } from '../../helpers/uuid';
 import { mapStateToProps } from '../ProductCard/ProductCard';
 import { getProductInfoByIdQuery } from '../../queries/getProductInfoByIdQuery';
-import { addItemToCartAction } from '../../store/cart/actionCreators';
+import {
+	addItemToCartAction,
+	increaseExistingProduct,
+} from '../../store/cart/actionCreators';
 import { withRouter } from '../../helpers/withRouter';
 
 import './CardInfo.scss';
@@ -89,24 +93,43 @@ class CardInfo extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		const navigate = this.props.navigate;
-
+		const keysLength = Object.keys(this.state.validation).length;
+		const attributesLength = this.state.data.attributes.length;
 		if (
-			(Object.keys(this.state.validation).length === 0 &&
-				this.state.data.attributes.length !== 0) ||
-			Object.keys(this.state.validation).length !==
-				this.state.data.attributes.length
+			(keysLength === 0 && attributesLength !== 0) ||
+			keysLength !== attributesLength
 		) {
 			alert('Select product options!');
 		} else {
 			const dataObj = {
-				itemQuantity: 0,
+				uniqueId: uuidv4(),
+				itemQuantity: 1,
 				data: this.state.data,
 				amount: this.state.amount,
 				symbol: this.state.symbol,
 				selected: this.state.validation,
 			};
+			const cart = this.props.cart.cart;
+			let isAdded = false;
 
-			store.dispatch(addItemToCartAction(dataObj));
+			if (cart.length === 0) {
+				store.dispatch(addItemToCartAction(dataObj));
+			}
+
+			for (let i = 0; i < cart.length; i++) {
+				if (
+					cart[i].data.id === dataObj.data.id &&
+					JSON.stringify(dataObj.selected) === JSON.stringify(cart[i].selected)
+				) {
+					store.dispatch(increaseExistingProduct(cart[i].uniqueId));
+					isAdded = true;
+					break;
+				}
+			}
+			if (isAdded === false && cart.length > 0) {
+				store.dispatch(addItemToCartAction(dataObj));
+			}
+
 			navigate(`/all`);
 		}
 	}

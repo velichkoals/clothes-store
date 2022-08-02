@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 .cart__item {
 
   &__line {
@@ -10,6 +12,7 @@
     align-items: center;
   }
   &__slider {
+    width: 250px;
     position: relative;
   }
   &__slide {
@@ -27,13 +30,35 @@
     bottom: 20px;
 
     &_left {
-      right: 45px;
+      right: 95px;
     }
     &_right {
-      right: 15px;
+      right: 65px;
     }
     &:hover {
       cursor: pointer;
     }
+  }
+  &__column {
+    display: flex;
+  }
+  &__amount {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 20px;
+  }
+}
+
+.item {
+  &__operation {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__quantity {
+    font-weight: $weight-semi-bold;
+    font-size: 24px;
   }
 }

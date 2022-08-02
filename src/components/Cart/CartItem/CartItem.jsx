@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import CardData from '../../CardData/CardData';
 import { ReactComponent as LeftArrow } from '../../../assets/left-arrow.svg';
 import { ReactComponent as RightArrow } from '../../../assets/right-arrow.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/plus-square.svg';
+import { ReactComponent as MinusIcon } from '../../../assets/minus-square.svg';
 import { connect } from 'react-redux';
+import { store } from '../../../store';
 import { mapStateToProps } from '../../ProductCard/ProductCard';
+import {
+	decreaseExistingProduct,
+	increaseExistingProduct,
+	removeItemFromCartAction,
+} from '../../../store/cart/actionCreators';
 
 import './CartItem.scss';
 
@@ -39,7 +47,6 @@ class CartItem extends Component {
 
 	render() {
 		const item = this.props.item;
-
 		return (
 			<div className='cart__item' key={this.props.id}>
 				<hr className='cart__item__line' />
@@ -51,6 +58,23 @@ class CartItem extends Component {
 						selected={item.selected}
 					/>
 					<div className='cart__item__column'>
+						<div className='cart__item__amount'>
+							<PlusIcon
+								className='item__operation'
+								onClick={() =>
+									store.dispatch(increaseExistingProduct(item.uniqueId))
+								}
+							/>
+							<div className='item__quantity'>{item.itemQuantity}</div>
+							<MinusIcon
+								className='item__operation'
+								onClick={() =>
+									item.itemQuantity > 1
+										? store.dispatch(decreaseExistingProduct(item.uniqueId))
+										: store.dispatch(removeItemFromCartAction(item.uniqueId))
+								}
+							/>
+						</div>
 						<div className='cart__item__slider'>
 							<img
 								src={item.data.gallery[this.state.currentPhoto]}
