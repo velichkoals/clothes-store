@@ -62,7 +62,12 @@ class CartItem extends Component {
 							<PlusIcon
 								className='item__operation'
 								onClick={() =>
-									store.dispatch(increaseExistingProduct(item.uniqueId))
+									store.dispatch(
+										increaseExistingProduct(
+											item.uniqueId,
+											parseFloat(item.data.prices[0].amount)
+										)
+									)
 								}
 							/>
 							<div className='item__quantity'>{item.itemQuantity}</div>
@@ -70,8 +75,18 @@ class CartItem extends Component {
 								className='item__operation'
 								onClick={() =>
 									item.itemQuantity > 1
-										? store.dispatch(decreaseExistingProduct(item.uniqueId))
-										: store.dispatch(removeItemFromCartAction(item.uniqueId))
+										? store.dispatch(
+												decreaseExistingProduct(
+													item.uniqueId,
+													parseFloat(item.data.prices[0].amount)
+												)
+										  )
+										: store.dispatch(
+												removeItemFromCartAction(
+													item.uniqueId,
+													parseFloat(item.data.prices[0].amount)
+												)
+										  )
 								}
 							/>
 						</div>

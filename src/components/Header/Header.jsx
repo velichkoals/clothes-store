@@ -55,6 +55,13 @@ class Header extends Component {
 	}
 
 	render() {
+		if (this.state.isOpen) {
+			document.body.style.overflowY = 'hidden';
+			document.body.style.height = '100%';
+		} else {
+			document.body.style.overflowY = 'scroll';
+		}
+
 		return (
 			<header className='header'>
 				<div className='header__section'>

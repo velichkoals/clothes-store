@@ -29,6 +29,14 @@ class Cart extends Component {
 						<CartItem key={item.uniqueId} id={item.uniqueId} item={item} />
 					))}
 					<hr className='cart__line' />
+					<div className='cart__text'>
+						{' '}
+						Quantity: <span>{this.props.cart.quantity}</span>
+					</div>
+					<div className='cart__text'>
+						{' '}
+						Total: <span>${this.props.cart.totalAmount}</span>
+					</div>
 					<button
 						type='submit'
 						className='submit-btn'

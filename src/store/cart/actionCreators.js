@@ -11,21 +11,30 @@ export const addItemToCartAction = (payload) => ({
 	payload,
 });
 
-export const removeItemFromCartAction = (payload) => ({
+export const removeItemFromCartAction = (id, price) => ({
 	type: REMOVE_FROM_CART,
-	payload,
+	payload: {
+		id,
+		price,
+	},
 });
 
 export const clearCartAction = () => ({
 	type: CLEAR_CART,
 });
 
-export const increaseExistingProduct = (payload) => ({
+export const increaseExistingProduct = (id, price) => ({
 	type: INCREASE_EXISTING_PRODUCT,
-	payload,
+	payload: {
+		id,
+		price,
+	},
 });
 
-export const decreaseExistingProduct = (payload) => ({
+export const decreaseExistingProduct = (id, price) => ({
 	type: DECREASE_EXISTING_PRODUCT,
-	payload,
+	payload: {
+		id,
+		price,
+	},
 });

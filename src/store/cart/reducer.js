@@ -9,6 +9,7 @@ import {
 export const defaultState = {
 	quantity: 0,
 	cart: [],
+	totalAmount: 0,
 };
 
 export const cartReducer = (state = defaultState, action) => {
@@ -17,6 +18,9 @@ export const cartReducer = (state = defaultState, action) => {
 			return {
 				quantity: (state.quantity += 1),
 				cart: [...state.cart, action.payload],
+				totalAmount: parseFloat(
+					(state.totalAmount + action.payload.data?.prices[0].amount).toFixed(2)
+				),
 			};
 		}
 
@@ -25,32 +29,48 @@ export const cartReducer = (state = defaultState, action) => {
 				quantity: (state.quantity -= 1),
 				cart: [
 					...state.cart.filter((item) =>
-						item.uniqueId !== action.payload ? item : null
+						item.uniqueId !== action.payload.id ? item : null
 					),
 				],
+				totalAmount: parseFloat(
+					(state.totalAmount - action.payload.price).toFixed(2)
+				),
 			};
 		}
+
 		case CLEAR_CART: {
-			return { quantity: 0, cart: [] };
+			return { quantity: 0, cart: [], totalAmount: 0 };
 		}
+
 		case INCREASE_EXISTING_PRODUCT: {
 			return {
 				quantity: (state.quantity += 1),
 				cart: [
 					...state.cart.filter((item) =>
-						item.uniqueId === action.payload ? (item.itemQuantity += 1) : item
+						item.uniqueId === action.payload.id
+							? (item.itemQuantity += 1)
+							: item
 					),
 				],
+				totalAmount: parseFloat(
+					(state.totalAmount + action.payload.price).toFixed(2)
+				),
 			};
 		}
+
 		case DECREASE_EXISTING_PRODUCT: {
 			return {
 				quantity: (state.quantity -= 1),
 				cart: [
 					...state.cart.filter((item) =>
-						item.uniqueId === action.payload ? (item.itemQuantity -= 1) : item
+						item.uniqueId === action.payload.id
+							? (item.itemQuantity -= 1)
+							: item
 					),
 				],
+				totalAmount: parseFloat(
+					(state.totalAmount - action.payload.price).toFixed(2)
+				),
 			};
 		}
 		default:

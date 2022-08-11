@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 
 import './CardData.scss';
+import { useParams } from 'react-router-dom';
+import { withRouter } from '../../helpers/withRouter';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../ProductCard/ProductCard';
 
 class CardData extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isCart: false,
+			isCardInfo: true,
 		};
 	}
 
 	componentDidMount() {
-		if (window.location.pathname === '/cart') {
+		const params = this.props.params;
+		let id = params?.cardId;
+
+		if (window.location.pathname === `/${id}`) {
 			this.setState({
-				isCart: true,
+				isCardInfo: true,
+			});
+		} else {
+			this.setState({
+				isCardInfo: false,
 			});
 		}
 	}
@@ -40,7 +51,7 @@ class CardData extends Component {
 											<label
 												htmlFor={`${item.id} ${attribute.id}`}
 												className={`${
-													this.state.isCart === true
+													this.state?.isCardInfo === false
 														? this.props.selected.some(
 																(el) =>
 																	el.value === item.value &&
@@ -74,7 +85,7 @@ class CardData extends Component {
 											<label
 												htmlFor={item.id}
 												className={`${
-													this.state.isCart === true
+													!this.state.isCardInfo
 														? this.props.selected.some(
 																(el) => el.value === item.value
 														  )
@@ -101,4 +112,6 @@ class CardData extends Component {
 	}
 }
 
-export default CardData;
+const Data = (props) => <CardData {...props} params={useParams()} />;
+
+export default withRouter(connect(mapStateToProps)(Data));
